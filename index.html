@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tesla Driving Simulator</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .controls {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    .controls button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+
+    .desert-background {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: url('/tesla/images/newFile.jpeg') no-repeat center center/cover;
+    }
+
+    #teslaCar {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button id="startButton">Start</button>
+    <button id="stopButton">Stop</button>
+    <button id="forwardButton">Go Forward</button>
+    <button id="backwardButton">Go Backward</button>
+  </div>
+  <div class="desert-background">
+    <img id="teslaCar" src="/tesla/images/newFile1.jpeg" alt="Tesla Car">
+  </div>
+  <script>
+    const teslaCar = document.getElementById('teslaCar');
+    let carPosition = 0;
+    let moving = false;
+    let direction = 0; // 1 for forward, -1 for backward
+
+    document.getElementById('startButton').addEventListener('click', () => {
+      moving = true;
+      moveCar();
+    });
+
+    document.getElementById('stopButton').addEventListener('click', () => {
+      moving = false;
+    });
+
+    document.getElementById('forwardButton').addEventListener('click', () => {
+      direction = 1;
+      if (!moving) {
+        moving = true;
+        moveCar();
+      }
+    });
+
+    document.getElementById('backwardButton').addEventListener('click', () => {
+      direction = -1;
+      if (!moving) {
+        moving = true;
+        moveCar();
+      }
+    });
+
+    function moveCar() {
+      if (moving) {
+        carPosition += direction * 5;
+        teslaCar.style.transform = `translateX(${carPosition}px)`;
+        requestAnimationFrame(moveCar);
+      }
+    }
+  </script>
+</body>
+</html>
